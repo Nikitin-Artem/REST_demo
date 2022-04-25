@@ -1,8 +1,6 @@
 package org.example.rest.controller;
 
 import org.example.rest.entity.Student;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -40,17 +38,5 @@ public class StudentRestController {
             throw new StudentNotFoundException("Student id not found - " + studentId);
         }
         return students.get(studentId);
-    }
-
-    // exception handler for studentId searching if not exist, using @ExceptionHandler
-    @ExceptionHandler
-    public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException exc){
-        StudentErrorResponse errorResponse = new StudentErrorResponse();
-
-        errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
-        errorResponse.setMessage(exc.getMessage());
-        errorResponse.setTimeStamp(System.currentTimeMillis());
-
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 }
